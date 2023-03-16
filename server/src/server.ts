@@ -28,7 +28,10 @@ app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'development' || config.NODE_ENV === 'development') {
   app.use(morgan('dev'));
   app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: [
+      'http://localhost:3000',
+      'https://fabulous-macaron-23ebff.netlify.app/'
+    ],
     credentials: true
 
   }));
