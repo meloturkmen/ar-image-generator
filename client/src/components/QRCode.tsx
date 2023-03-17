@@ -4,7 +4,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import { v4 as uuid } from "uuid";
 import useStore from '../store';
 import { exportUSDZasFile, exportGLTFasFile } from '../helpers/arExportHelper';
-
+// import { uploadFile } from '../services/azureService';
 
 type Props = {
 
@@ -38,18 +38,19 @@ const QRCode = ({ sceneRef }: Props) => {
         console.log(usdz, gltf);
 
 
-        setTimeout(() => {
-            console.log("uploaded files");
-            setURL(`https://1de1-88-242-138-175.eu.ngrok.io/arviewer?sceneID=${small_id}`)
-            setIsLoading(false);
 
-        }, 15000)
 
-        
+
+
         await Promise.all([
             uploadFile(usdz, small_id),
             uploadFile(gltf, small_id)
         ]);
+
+        console.log("uploaded files");
+        setURL(`https://1de1-88-242-138-175.eu.ngrok.io/arviewer?sceneID=${small_id}`)
+        setIsLoading(false);
+
 
 
     }

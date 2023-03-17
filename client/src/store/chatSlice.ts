@@ -69,20 +69,28 @@ export const chatSlice: StateCreator<ChatState> = (set) => ({
     },
     uploadFile: async (file: File, id: string) => {
 
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('sceneID', id);
+        const uploadURL = await axios.post('/upload', { sceneID: id, fileName: file.name }).then(res => res.data.uploadURL);
 
-        const response = await axios.post('/upload', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
+        return new Promise(async (resolve, reject) => {
+            var req = new XMLHttpRequest();
+            req.open("PUT", uploadURL);
+            req.setRequestHeader("x-ms-blob-type", "BlockBlob");
+            if (file.name.includes(".usdz")) {
+                req.setRequestHeader("Content-Type", "model/vnd.usdz+zip");
             }
-        }).then(res => res.data)
-
-        console.log('response', response);
-
-        return response.fileContent as string;
-
+            req.onload = function (event: any) {
+                console.log(
+                    "uploadPutHandler1: ",
+                    event.target,
+                    "event.target.response: ",
+                    event.target.response,
+                    "event.target.responseURL: ",
+                    event.target.responseURL
+                );
+                return resolve(event.target.responseURL); 
+            };
+            req.send(file);
+        });
 
     }
 });

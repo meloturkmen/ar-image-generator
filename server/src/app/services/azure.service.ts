@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { BlobServiceClient } from '@azure/storage-blob';
-
+import azure from 'azure-storage';
 import multer, { Multer } from 'multer';
 
 
@@ -49,6 +49,38 @@ class AzureService {
 			size: file.size,
 			type: extension,
 		};
+	}
+
+	createFileUploadURL(sceneId: string, fileName: string) {
+
+		const startDate = new Date();
+		const expiryDate = new Date(startDate);
+		expiryDate.setMinutes(startDate.getMinutes() + 5);
+		startDate.setMinutes(startDate.getMinutes() - 5);
+
+		const blobService = azure.createBlobService(this.accountKey);
+
+
+		const sharedAccessPolicy = {
+			AccessPolicy: {
+				Permissions: azure.BlobUtilities.SharedAccessPermissions.WRITE,
+				Start: startDate,
+				Expiry: expiryDate,
+			},
+		};
+
+		const token = blobService.generateSharedAccessSignature(
+			this.containerName,
+			`openai/${sceneId}/${fileName}`,
+			sharedAccessPolicy
+		);
+		const sasUrl = blobService.getUrl(
+			this.containerName,
+			`openai/${sceneId}/${fileName}`,
+			token
+		);
+
+		return sasUrl;
 	}
 
 	public async deleteFile(fileName: string) {
