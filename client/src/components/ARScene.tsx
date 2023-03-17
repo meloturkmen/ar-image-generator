@@ -11,24 +11,24 @@ type Props = {
 
 const ARScene = ({ sceneRef }: Props) => {
     const image: string | null = useStore(state => state.image);
-    const getImageFromAPI = useStore(state => state.getImageFromAPI);
+    // const getImageFromAPI = useStore(state => state.getImageFromAPI);
 
 
-    const [imageBase64, setImageBase64] = useState<string | null>(null)
-
-
-
-
-    const handleImage = async () => {
-        const result = await getImageFromAPI(image);
-        setImageBase64(result)
-    }
+    // const [imageBase64, setImageBase64] = useState<string | null>(null)
 
 
 
-    useEffect(() => {
-        handleImage();
-    }, [image])
+
+    // const handleImage = async () => {
+    //     const result = await getImageFromAPI(image);
+    //     setImageBase64(result)
+    // }
+
+
+
+    // useEffect(() => {
+    //     handleImage();
+    // }, [image])
 
     return (
         <div className='relative w-full flex-[3]  h-max-[50%] bg-white rounded-md  shadow-sm flex h-1/2 lg:h-full lg:w-0 lg:flex-1 '>
@@ -37,7 +37,7 @@ const ARScene = ({ sceneRef }: Props) => {
                 <Suspense fallback={<Html>
                     loading...
                 </Html>}>
-                    <ImageFrame imageUrl={imageBase64 || 'placeholder-2.avif'} innerRef={sceneRef} />
+                    <ImageFrame imageUrl={image || 'placeholder-2.avif'} innerRef={sceneRef} />
                 </Suspense>
 
                 <OrbitControls />
