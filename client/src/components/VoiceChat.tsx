@@ -71,11 +71,11 @@ const Chat = ({ sceneRef }: Props) => {
     }
 
     return (
-        <div className='flex flex-col justify-between  lg:w-[clamp(20rem,40%,30rem)]'>
+        <div className='flex flex-col flex-1 justify-between  lg:w-[clamp(20rem,40%,30rem)] lg:flex-initial'>
 
             <QRCode sceneRef={sceneRef} />
 
-            <ul className=' flex items-center w-full  py-5  gap-2 flex flex-col hidden lg:flex '>
+            <ul className=' flex items-center w-full  py-5  gap-2 flex flex-col hidden lg:flex  '>
                 <span className='text-lg mb-2 w-full'>Example Commands:</span>
 
                 {EXAMPLE_COMMANDS.map((command, index) => (

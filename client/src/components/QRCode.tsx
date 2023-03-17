@@ -38,16 +38,20 @@ const QRCode = ({ sceneRef }: Props) => {
         console.log(usdz, gltf);
 
 
-        uploadFile(usdz, small_id);
-        uploadFile(gltf, small_id)
-
-
         setTimeout(() => {
             console.log("uploaded files");
             setURL(`https://1de1-88-242-138-175.eu.ngrok.io/arviewer?sceneID=${small_id}`)
             setIsLoading(false);
 
         }, 15000)
+
+        
+        await Promise.all([
+            uploadFile(usdz, small_id),
+            uploadFile(gltf, small_id)
+        ]);
+
+
     }
 
 

@@ -31,7 +31,7 @@ const ARScene = ({ sceneRef }: Props) => {
     }, [image])
 
     return (
-        <div className='relative w-full flex-1  h-max-[50%] bg-white rounded-md  shadow-sm flex h-1/2 lg:h-full lg:w-0 '>
+        <div className='relative w-full flex-[3]  h-max-[50%] bg-white rounded-md  shadow-sm flex h-1/2 lg:h-full lg:w-0 lg:flex-1 '>
             <Canvas resize={{ debounce: 0 }} >
 
                 <Suspense fallback={<Html>
