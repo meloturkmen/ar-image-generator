@@ -19,13 +19,15 @@ const azure_service_1 = __importDefault(require("../services/azure.service"));
 ;
 // Export module for registering router in express app
 exports.router = (0, express_1.Router)();
+const multer_1 = __importDefault(require("multer"));
 const azureService = new azure_service_1.default();
-const upload = azureService.upload();
-exports.router.post('/upload', upload.single('file'), (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const inMemoryStorage = multer_1.default.memoryStorage(), uploadStrategy = (0, multer_1.default)({ storage: inMemoryStorage }).single('file');
+exports.router.post('/upload', uploadStrategy, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('uploading file');
     const file = req.file;
     const sceneId = req.body.sceneID;
     const fileContent = yield azureService.uploadFile(file, sceneId);
-    res.status(200).json({
+    return res.status(200).json({
         message: 'File uploaded successfully',
         fileContent
     });

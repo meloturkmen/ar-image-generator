@@ -13,19 +13,23 @@ declare module 'express' {
 
 // Export module for registering router in express app
 export const router: Router = Router();
+import multer from "multer";
 const azureService: AzureService = new AzureService();
-const upload = azureService.upload();
+
+const inMemoryStorage = multer.memoryStorage()
+    , uploadStrategy = multer({ storage: inMemoryStorage }).single('file')
 
 
+router.post('/upload', uploadStrategy, async (req: Request, res: Response, next: NextFunction) => {
 
-router.post('/upload', upload.single('file'), async (req: Request, res: Response, next: NextFunction) => {
+    console.log('uploading file');
     const file = req.file as Express.Multer.File;
     const sceneId = req.body.sceneID as string;
 
     const fileContent = await azureService.uploadFile(file, sceneId);
 
 
-    res.status(200).json({
+    return res.status(200).json({
         message: 'File uploaded successfully',
         fileContent
     });

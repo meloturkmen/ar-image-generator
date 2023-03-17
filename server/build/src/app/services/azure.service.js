@@ -8,12 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const storage_blob_1 = require("@azure/storage-blob");
-const multer_1 = __importDefault(require("multer"));
 class AzureService {
     constructor() {
         this.containerName = process.env.AZURE_CONTAINER_NAME;
@@ -21,18 +17,6 @@ class AzureService {
         this.accountKey = process.env.AZURE_STORAGE_CONNECTION_STRING;
         const azureClient = storage_blob_1.BlobServiceClient.fromConnectionString(this.accountKey);
         this.containerClient = azureClient.getContainerClient(this.containerName);
-    }
-    upload() {
-        return (0, multer_1.default)({
-            storage: multer_1.default.memoryStorage(),
-            limits: { fileSize: 1000000000, files: 1 },
-            fileFilter(req, file, cb) {
-                if (!file.originalname.match(/\.(usdz|glb|gltf|png|jpg)$/)) {
-                    return cb(new Error('Please upload a valid image file'));
-                }
-                cb(null, true);
-            },
-        });
     }
     uploadFile(file, id) {
         return __awaiter(this, void 0, void 0, function* () {

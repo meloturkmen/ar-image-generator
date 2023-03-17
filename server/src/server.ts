@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import bodyParser from 'body-parser';
+import morganBody from 'morgan-body';
 import config from '../config.json';
 import { getFilesWithKeyword } from './utils/getFilesWithKeyword';
 
@@ -20,15 +22,25 @@ dotenv.config();
  *                              Basic Express Middlewares
  ***********************************************************************************/
 
-app.set('json spaces', 4);
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: false }));
+
+// parse application/json
+app.use(bodyParser.json({ limit: "5mb" }));
+
+// hook morganBody to express app
+morganBody(app);
+
+app.set("trust proxy", true);
 
 // Handle logs in console during development
 if (process.env.NODE_ENV === 'development' || config.NODE_ENV === 'development') {
   app.use(morgan('dev'));
   app.use(cors({
-    origin: ['http://localhost:3000','https://fabulous-macaron-23ebff.netlify.app'],
+    origin: ['http://localhost:3000', 'https://fabulous-macaron-23ebff.netlify.app'],
     credentials: true
 
   }));

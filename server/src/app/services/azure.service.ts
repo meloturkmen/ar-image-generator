@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { BlobServiceClient } from '@azure/storage-blob';
-import { Request } from 'express';
+
 import multer, { Multer } from 'multer';
-import { type } from 'os';
+
 
 
 type IFileContent = {
@@ -27,18 +27,7 @@ class AzureService {
 
 		this.containerClient = azureClient.getContainerClient(this.containerName);
 	}
-	public upload(): Multer {
-		return multer({
-			storage: multer.memoryStorage(),
-			limits: { fileSize: 1000000000, files: 1 },
-			fileFilter(req, file, cb) {
-				if (!file.originalname.match(/\.(usdz|glb|gltf|png|jpg)$/)) {
-					return cb(new Error('Please upload a valid image file'));
-				}
-				cb(null, true);
-			},
-		});
-	}
+
 	public async uploadFile(file: Express.Multer.File, id: string): Promise<IFileContent> {
 
 		console.log("uploading file to azure storage");
