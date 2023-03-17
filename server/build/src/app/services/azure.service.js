@@ -36,11 +36,13 @@ class AzureService {
     }
     uploadFile(file, id) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("uploading file to azure storage");
             const [originalName, extension] = file.originalname.split('.');
             const file_name = `${originalName}.${extension}`;
             const blobName = `openai/${id}/${file_name}`;
             const blockBlobClient = this.containerClient.getBlockBlobClient(blobName);
             const uploadBlobResponse = yield blockBlobClient.upload(file.buffer, file.buffer.length);
+            console.log(`File uploaded to ${blockBlobClient.url}`);
             return {
                 url: blockBlobClient.url,
                 filename: file_name,

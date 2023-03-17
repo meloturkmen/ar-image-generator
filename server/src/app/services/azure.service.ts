@@ -40,6 +40,8 @@ class AzureService {
 		});
 	}
 	public async uploadFile(file: Express.Multer.File, id: string): Promise<IFileContent> {
+
+		console.log("uploading file to azure storage");
 		const [originalName, extension] = file.originalname.split('.');
 
 		const file_name = `${originalName}.${extension}`;
@@ -50,6 +52,8 @@ class AzureService {
 
 		const uploadBlobResponse = await blockBlobClient.upload(file.buffer, file.buffer.length);
 
+
+		console.log(`File uploaded to ${blockBlobClient.url}`);
 		return {
 			url: blockBlobClient.url,
 			filename: file_name,
