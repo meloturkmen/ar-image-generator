@@ -24,13 +24,15 @@ app.set('json spaces', 4);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(morgan('dev'));
-console.log('NODE_ENV', process.env.NODE_ENV);
-console.log('Enabling CORS for development');
-app.use(cors({
-  origin: ['https://fabulous-macaron-23ebff.netlify.app', 'http://localhost:3000'],
-}));
+// Handle logs in console during development
+if (process.env.NODE_ENV === 'development' || config.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+  app.use(cors({
+    origin: ['http://localhost:3000','https://fabulous-macaron-23ebff.netlify.app'],
+    credentials: true
 
+  }));
+}
 
 // Handle security and origin in production
 if (process.env.NODE_ENV === 'production' || config.NODE_ENV === 'production') {
