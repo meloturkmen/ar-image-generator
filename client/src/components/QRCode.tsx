@@ -74,14 +74,14 @@ const QRCode = ({ sceneRef }: Props) => {
             <span className='lg:text-xl xxl:text-2xl font-bold'>View in your Space</span>
             {
 
-                isLoading ? <div className={`h-[${calculatedSize}px]  w-[${calculatedSize}px]  flex items-center justify-center p-5 flex-col  border-blue-500`}>
+                isLoading ? <div className={`h-[${calculatedSize - 50}px]  w-[${calculatedSize}px]  flex items-center justify-center  flex-col  border-blue-500`}>
 
 
                     <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                 </div> :
                     <QRCodeCanvas
                         id="qrCode"
-                        value={url || "https://1de1-88-242-138-175.eu.ngrok.io"}
+                        value={url || "https://fabulous-macaron-23ebff.netlify.app/arviewer?sceneID=39d2c0a2"}
                         size={calculatedSize}
                         bgColor={"#ffffff"}
                         level={"H"}
