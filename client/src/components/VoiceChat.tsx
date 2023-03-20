@@ -66,12 +66,12 @@ const Chat = ({ sceneRef }: Props) => {
 
 
 
-    if (typeof window !== 'undefined' && !browserSupportsSpeechRecognition) {
-        return <span>Browser doesn't support speech recognition.</span>;
-    }
+    // if (typeof window !== 'undefined' && !browserSupportsSpeechRecognition) {
+    //     return <span>Browser doesn't support speech recognition.</span>;
+    // }
 
     return (
-        <div className='flex flex-col flex-1 justify-between  lg:w-[clamp(20rem,40%,30rem)] lg:flex-initial'>
+        <div className='flex flex-col flex-1 justify-between  lg:w-[clamp(20rem,40%,30rem)]  lg:flex-initial'>
 
             <QRCode sceneRef={sceneRef} />
 
@@ -115,7 +115,7 @@ const Chat = ({ sceneRef }: Props) => {
         <FontAwesomeIcon icon={listening ? faMicrophone : faMicrophoneSlash} color='#ffffff' />
     </div> */}
                         <span className='text-white text-lg'>{
-                            listening ? 'Stop Listening' : 'Start Listening'
+                            listening ? 'Stop Speaking' : 'Start Speaking'
                         }</span>
 
                     </button>
