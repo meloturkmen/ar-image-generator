@@ -74,7 +74,11 @@ const QRCode = ({ sceneRef }: Props) => {
             <span className='lg:text-xl xxl:text-2xl font-bold'>View in your Space</span>
             {
 
-                isLoading ? <div className={`h-[${calculatedSize - 50}px]  w-[${calculatedSize}px]  flex items-center justify-center  flex-col  border-blue-500`}>
+                isLoading ? <div className={`flex items-center justify-center  flex-col  border-blue-500`} style={{
+                    width: `${calculatedSize}px`,
+                    height: `${calculatedSize - 50}px`
+
+                }}>
 
 
                     <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -89,7 +93,9 @@ const QRCode = ({ sceneRef }: Props) => {
 
             }
 
-            <button onClick={handleGenerateQR} className={`bg-blue-400 px-5 py-2 w-[${calculatedSize}px] text-white rounded-md`}>Generate QR Code</button>
+            <button onClick={handleGenerateQR} className={`bg-blue-400 px-5 py-2 w-[${calculatedSize}px] text-white rounded-md`} style={{
+                width: `${calculatedSize}px`
+            }}>Generate QR Code</button>
             {
                 isLoading && <span className='w-full text-sm text-gray-500 text-center mt-2'>*This will take a few seconds,please wait...</span>
             }
