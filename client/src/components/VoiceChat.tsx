@@ -17,9 +17,7 @@ type Props = {
 }
 
 const EXAMPLE_COMMANDS = [
-    'An oil painting by Matisse of a humanoid robot playing chess',
     'A photo of a teddy bear on a skateboard in Times Square',
-    'A comic book cover of a superhero wearing headphones',
 ];
 
 const Chat = ({ sceneRef }: Props) => {
